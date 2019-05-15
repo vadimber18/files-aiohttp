@@ -1,0 +1,251 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: "Files API"
+host: "127.0.0.1"
+basePath: "/api"
+tags:
+- name: "auth"
+- name: "files"
+schemes:
+- "http"
+paths:
+  /register:
+    post:
+      tags:
+      - "auth"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/AuthRegister"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/SuccessTrue"
+
+  /login:
+    post:
+      tags:
+      - "auth"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/AuthLogin"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/AuthLoginResponse"
+
+  /files:
+    get:
+      tags:
+      - "files"
+      description: "Get files list"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "user"
+        type: "string"
+        description: "Fetch files with this owner. Example: 1/1,2,3"
+      - in: "query"
+        name: "from"
+        type: "string"
+        description: "Fetch files with pub_date >= this. Example: 2018-12-03"
+      - in: "query"
+        name: "to"
+        type: "string"
+        description: "Fetch files with pub_date <= this. Example: 2018-12-03"
+      - in: "query"
+        name: "limit"
+        type: "string"
+        description: "Number of results to return per page"
+      - in: "query"
+        name: "offset"
+        type: "string"
+        description: "The initial index from which to return the results"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/FileQuerySet"
+      security:
+      - auth_token: []
+
+  /files/{file_id}:
+    get:
+      tags:
+      - "files"
+      description: "Get file by id or slug (slug passing through %file_id%)"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "file_id"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/File"
+      security:
+      - auth_token: []
+
+  /files/upload:
+    post:
+      tags:
+      - "files"
+      description: "Upload file"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "formData"
+        required: True
+        name: "file"
+        type: "file"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UploadFile"
+      security:
+      - auth_token: []
+
+  /files/download/{file_id}:
+    get:
+      tags:
+      - "files"
+      description: "Get direct file download link. file_id may be either slug or id"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "file_id"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/DownloadFile"
+      security:
+      - auth_token: []
+
+securityDefinitions:
+  auth_token:
+    type: "apiKey"
+    name: "authorization_jwt"
+    description: "get this @ login"
+    in: "header"
+definitions:
+  FileQuerySet:
+    type: "object"
+    properties:
+      count:
+        type: "integer"
+        description: "count of all files with this filters (not considering pagination)"
+        example: 143
+      next:
+        type: "string"
+        description: "endpoint for next pagination page"
+        example: "http://example.com/api/files?limit=20&offset=60"
+      previous:
+        type: "string"
+        description: "endpoint for previous pagination page"
+        example: "http://example.com/api/files?limit=20&offset=20"
+      results:
+        type: "array"
+        items:
+          $ref: "#/definitions/File"
+  File:
+    type: "object"
+    properties:
+      file_id:
+        type: "integer"
+        example: 1
+      file_slug:
+        type: "string"
+        example: "bc149312e420a72c538550c8e31065b923c17f52"
+      file_filename:
+        type: "string"
+        example: "example.docx"
+      file_pub_date:
+        type: "string"
+        example: "2018-12-11"
+      file_user_id:
+        type: "integer"
+        example: 1
+      users_username:
+        type: "string"
+        example: "ivan"
+      users_email:
+        type: "string"
+        example: "example@example.com"
+  UploadFile:
+    type: "string"
+    example: "0cf438c655334ba0c9f004b1b9dba12206fe4e26"
+    description: "slug of file, may be used for download link"
+  DownloadFile:
+    type: "string"
+    example: "http://example.com/uploads/file.txt"
+    description: "direct link for file download"
+  SuccessTrue:
+    type: "object"
+    properties:
+      success: 
+        type: "boolean"
+        example: True
+  AuthRegister:
+    type: "object"
+    required:
+    - "username"
+    - "email"
+    - "password"
+    - "first_name"
+    - "last_name"
+    - "role"
+    properties:
+      username:
+        type: "string"
+        example: "ivan"
+      email:
+        type: "string"
+        example: "ivan@gmail.com"
+      password:
+        type: "string"
+        example: "qwerty"
+  AuthLogin:
+    type: "object"
+    required:
+    - "username"
+    - "password"
+    properties:
+      username:
+        type: "string"
+        example: "ivan"
+      password:
+        type: "string"
+        example: "qwerty"
+  AuthLoginResponse:
+    type: "object"
+    properties:
+      token:
+        type: "string"
+        example: "sometoken"

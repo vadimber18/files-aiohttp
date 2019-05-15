@@ -1,0 +1,6 @@
+ [
+ {"id":340,"filename":"file1.txt","slug":"abc","pub_date":"2017-10-19","user_id":420},
+ {"id":342,"filename":"file2.jpg","slug":"def","pub_date":"2017-11-23","user_id":421},
+ {"id":344,"filename":"file3.avi","slug":"ghi","pub_date":"2018-10-19","user_id":421},
+ {"id":345,"filename":"file4.ini","slug":"jkl","pub_date":"2018-10-19","user_id":422}
+ ]

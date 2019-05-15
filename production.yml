@@ -1,0 +1,46 @@
+version: '2'
+
+services:
+  aio: &aio
+    build:
+      context: .
+      dockerfile: ./compose/aio/Dockerfile
+    image: files_prod_aio
+    depends_on:
+      - postgres
+    env_file:
+      - ./.env/.aio
+      - ./.env/.postgres
+    volumes:
+      - ./uploads:/uploads
+    command: /start
+
+  postgres:
+    image: postgres:latest
+    env_file:
+      - ./.env/.postgres
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./compose/nginx/Dockerfile
+    image: files_prod_nginx
+    depends_on:
+      - aio
+    volumes:
+      - ./uploads:/uploads
+    env_file:
+      - ./.env/.nginx
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+
+  swagger:
+    build:
+      context: .
+      dockerfile: ./compose/swagger/Dockerfile
+    ports:
+      - "8000:8080"
+    image: files_prod_swagger
+    env_file:
+      - ./.env/.swagger

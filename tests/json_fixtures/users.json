@@ -1,0 +1,5 @@
+ [
+ {"id":420,"username":"oleg", "email":"oleg@mail.ru","passwd":"$5$rounds=535000$iGLZ6y7I1KHKMMyK$l4VDlNBPl7gEUUgK.Q83LtKMOZYT4nR0Gb1WahfJCq1"},
+ {"id":421,"username":"anton", "email":"anton@mail.ru","passwd":"$5$rounds=535000$rN8QZVc38/kpnat3$EGzpPb.wvUINyv6Iy0Y55yC84IRs6AcUGqFc06kHPM9"},
+ {"id":422,"username":"grigoriy", "email":"grigoriy@mail.ru","passwd":"$5$rounds=535000$V1UmlojNQkknfEZ9$sCKw/uCD/l0gYR.xJyaP.V0cYElxO9pAn.cYLPDDq96"}
+ ]

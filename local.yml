@@ -1,0 +1,35 @@
+version: '2'
+
+services:
+  aio: &aio
+    build:
+      context: .
+      dockerfile: ./compose/aio/Dockerfile
+    image: files_local_aio
+    depends_on:
+      - postgres
+    env_file:
+      - ./.env/.aio
+      - ./.env/.postgres
+    volumes:
+      - ./uploads:/uploads
+    ports:
+      - "8000:8080"
+    environment:
+      DEBUG: 'true'
+    command: /start
+
+  postgres:
+    image: postgres:latest
+    env_file:
+      - ./.env/.postgres
+
+  swagger:
+    build:
+      context: .
+      dockerfile: ./compose/swagger/Dockerfile
+    ports:
+      - "8001:8080"
+    image: files_local_swagger
+    env_file:
+      - ./.env/.swagger

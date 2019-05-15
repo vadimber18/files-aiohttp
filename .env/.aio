@@ -1,0 +1,18 @@
+# General
+# ------------------------------------------------------------------------------
+AIO_HOST=0.0.0.0
+AIO_PORT=8080
+
+# Security
+# ------------------------------------------------------------------------------
+JWT_SECRET=somesecret
+JWT_ALGO=HS256
+JWT_EXP=3600
+
+# aiohttp-admin
+# ------------------------------------------------------------------------------
+AIOHTTPADMIN_USER=admin
+AIOHTTPADMIN_PASSWORD=admin_pass
+
+# uploads
+UPLOAD_PATH=/uploads/

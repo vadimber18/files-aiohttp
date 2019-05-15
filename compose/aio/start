@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+
+/usr/local/bin/python init_db.py
+/usr/local/bin/python -m files

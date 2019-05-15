@@ -1,0 +1,16 @@
+# Main
+aiohttp
+aiopg[sa]
+aiohttp-cors
+#aiohttp-admin
+git+https://github.com/aio-libs/aiohttp_admin@master
+trafaret-config
+
+passlib
+PyJWT==1.4.0
+faker
+
+# For testing
+pytest
+pytest-aiohttp
+flake8

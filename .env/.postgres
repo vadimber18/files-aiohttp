@@ -1,0 +1,15 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=files
+POSTGRES_USER=files_user
+POSTGRES_PASSWORD=files_pass
+POSTGRES_MINSIZE=3
+POSTGRES_MAXSIZE=5
+
+# PostgreSQL Test
+# ------------------------------------------------------------------------------
+TEST_POSTGRES_DB=test_files
+TEST_POSTGRES_USER=test_files_user
+TEST_POSTGRES_PASSWORD=test_files_pass
