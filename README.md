@@ -5,8 +5,7 @@ Files app
 Apps
 ---------
 
-files
-^^^^^^^
+## files
 
 * contains 6 API handlers (`register`, `login`, `files`, `files_detail`, `files_upload`, `files_download_detail`)
 * API: logged-in users can both upload and download files, unauthorized users can register, login and get files/files_details
@@ -15,29 +14,24 @@ files
 Features
 ---------
 
-auth_middleware
-^^^^^^^^^^^^^^^
+## auth_middleware
 
 Upload/download API handlers processed by `auth_middleware` - simple jwt token implementation described in `middlewares.py`
 
-aiohttp-admin
-^^^^^^^^^^^^^
+## aiohttp-admin
 
 Simple `aiohttp-admin` for user and file models
 
-swagger
-^^^^^^^
+## swagger
 
 Each API endpoint described. loads from .json file.
 
-docker
-^^^^^^
+## docker
 
 There are two docker configurations - `local.yml` and `production.yml`. production one uses nginx web-server to serve file uploads and main app
 
 
-tests
-^^^^^
+## tests
 
 App contains tests for API handlers using aiohttp-pytest. some of them load data from json-fixtures
 
